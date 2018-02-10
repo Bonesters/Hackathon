@@ -19,8 +19,11 @@ SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTi
 FROM VehicleEvent 
 GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
 
-/*---most recent events from vehicle---*/
-SELECT VehicleID,Latitude,Longitude,StartTime,Heading,EventTypeID,Location FROM VehicleEvent WHERE StartTime>/*INSERT LAST TIME HERE*/ ORDER BY StartTime;
+/*---all events from today---*/
+SELECT VehicleID,Latitude,Longitude,StartTime,Heading,EventTypeID,Location 
+FROM VehicleEvent 
+WHERE DAY(StartTime)=DAY(CURRENT_TIMESTAMP) AND MONTH(StartTime)=MONTH(CURRENT_TIMESTAMP) AND YEAR(StartTime)=YEAR(CURRENT_TIMESTAMP)
+ORDER BY StartTime;
 
 /*---current time---*/
 SELECT CURRENT_TIMESTAMP;
