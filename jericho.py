@@ -67,7 +67,7 @@ def timePerTruckPerDayRange(t1, t2, truck):
         newData[x][1] = temp
 
     jsonMemes = json.dumps(newData)
-    print(jsonMemes)
+    #print(jsonMemes)
     return jsonMemes
 
 def timePerTruck():

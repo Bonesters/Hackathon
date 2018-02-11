@@ -3,7 +3,7 @@ from navigation import time_dist
 from jericho import * 
 
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='.')
 
 @app.route("/_get_time_dist")
 def _get_time_dist():
@@ -16,24 +16,40 @@ def _get_time_dist():
 
 @app.route("/_graph_",methods=['POST','GET'])
 def _graph_():
-    print("--------")
-    #print(request.method)
-    print(request.form.to_dict())
-    print("--------")
-    if(request.method == 'GET'):
-        result = "help"
-    return jsonify(statusText=result)
+    truck = request.args['truck']
+    startDate = request.args['startDate']
+    endDate = request.args['endDate']
+    print(truck + " " + startDate + " " + endDate)
+    #grab from sql
+    return make_response(jsonify(statusText=result))
 
-@app.route("/caeltest")
-def caeltest():
+
+@app.route("/truck_hours")
+def truck_hours():
+    truck = request.args.ge('truck')
+    startDate = request.args['startDate']
+    endDate = request.args['endDate']
+    print(truck + " " + startDate + " " + endDate)
+    #TODO run SQL statement and return results
     resp = make_response(jsonify('hello'))
     resp.headers["Access-Control-Allow-Origin"] = "http://localhost:3000"
     return resp
 
+
+@app.route("/truckSET",methods=['POST','GET'])
+def caeltest():
+    dictor = request.args.to_dict()
+    startDate = dictor['startDate']
+    endDate = dictor['endDate']
+    truck = request.args['truck']
+    response = timePerTruckPerDayRange(startDate,endDate,truck)
+    resp = make_response(jsonify(response))
+    #resp.headers["Access-Control-Allow-Origin"] = "http://localhost:3000"
+    return resp
+
 @app.route("/")
 def root():
-    getAllVehicles()
-    return render_template('ask.html')
+    return render_template('index.html')
 
 @app.route("/result",methods = ['POST','GET'])
 def hello():
