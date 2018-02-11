@@ -1,4 +1,6 @@
 import pymssql
+import json
+
 server = "data.hacktechvalley.com:1433"
 username = "ReadOnly"
 password = "ReadOnly"
@@ -13,13 +15,11 @@ def getAllVehicles():
         SELECT * FROM Vehicle;
         """
     )
-
-    row = cursor.fetchone()
-    numCols = len(row)
-    #print(numCols)
-    while row:
-        print("%s, %s, %s, %s, %s" % (row[0], row[1], row[2], row[3], row[4]))
-        row = cursor.fetchone()
+    
+    data = cursor.fetchall()
+    print(data)
+    print()
+    return json.dumps(data)
 
 def timePerTruckPerDay():
     cursor.execute("""
@@ -28,12 +28,10 @@ def timePerTruckPerDay():
         GROUP BY VehicleID,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);        
         """)
 
-    row = cursor.fetchone()
-    numCols = len(row)
-    #print(numCols)
-    while row:
-        print("%s, %s" % (row[0], row[1]))
-        row = cursor.fetchone()
+    data = cursor.fetchall()
+    print(data)
+    print()
+    return json.dumps(data)
 
 def timePerDay():
     cursor.execute("""
@@ -42,14 +40,10 @@ def timePerDay():
         GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
         """)
 
-    row = cursor.fetchone()
-    if row:
-        numCols = len(row)
-        #print(numCols)
-
-    while row:
-        print("%s" % (row[0]))
-        row = cursor.fetchone()
+    data = cursor.fetchall()
+    print(data)
+    print()
+    return json.dumps(data)
 
 def getRecentLocations():
     cursor.execute(
@@ -58,14 +52,10 @@ def getRecentLocations():
         """
     )
 
-    row = cursor.fetchone()
-    if row:
-        numCols = len(row)
-        #print(numCols)
-
-    while row:
-        print("%s, %s, %s, %s, %s, %s, %s" % (row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
-        row = cursor.fetchone()
+    data = cursor.fetchall()
+    print(data)
+    print()
+    return json.dumps(data)
 
 def main():
     getAllVehicles()
@@ -76,4 +66,5 @@ def main():
     print("\n")
     getRecentLocations()
 
-main()
+if (__name__ == "__main__"):
+    main()

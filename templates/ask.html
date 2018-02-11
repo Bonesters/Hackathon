@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type=text/javascript>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+    </head>
+   <body>
+        <script type=text/javascript>
+            $(function() {
+            $('a#calculate').bind('click', function() {
+                $.getJSON($SCRIPT_ROOT + '/_get_time_dist', {
+                origin: $('input[name="origin"]').val(),
+                destination: $('input[name="destination"]').val()
+                }, function(data) {
+                $("#result").text(data.result);
+                });
+                return false;
+            });
+            });
+        </script>
+        <p>
+            <input type="text" name="origin">
+            <input type="text" name="destination">
+            <span id="result">?</span>
+            <br>
+            <a href="#" id="calculate">find time</a>
+        </p>      
+   </body>
+</html>
