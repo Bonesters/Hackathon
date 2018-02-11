@@ -82,19 +82,6 @@ def timePerTruck():
     )
 
     data = cursor.fetchall()
-    #print(data[0])
-    #print(data[1])
-    #print(data[2])
-    #print(data[3])
-    #print(data[4])
-    #print(data[5])
-    #print(data[6])
-    #print(data[7])
-    #print(data[8])
-    #print(data[9])
-    #print(data[10])
-    #print(data[11])
-    #print(data[12])
     return json.dumps(data)
 
 def timePerDay():
