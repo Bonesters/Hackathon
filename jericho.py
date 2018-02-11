@@ -39,14 +39,14 @@ def timePerTruckPerDay():
     print(jsonMemes)
     return jsonMemes
 
-def timePerTruckPerDayRange(t1, t2, truck):
+def timePerTruckPerDayRange(t1, t2):
     cursor.execute(
         """
         SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTime))-MIN(CONVERT(float,VehicleEvent.StartTime))))),
         CONVERT(varchar,MIN(VehicleEvent.StartTime)),Vehicle.DisplayName
         FROM VehicleEvent 
         INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
-        WHERE (StartTime BETWEEN CONVERT(datetime,'""" + t1 + """',101) AND DATEADD(day,1,CONVERT(datetime,'""" + t2 + """',101))) AND (DisplayName='""" + truck + """')
+        WHERE StartTime BETWEEN CONVERT(datetime,'""" + str(t1) + """',101) AND DATEADD(day,1,CONVERT(datetime,'""" + str(t2) + """',101))
         GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
         ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
         """
@@ -67,7 +67,7 @@ def timePerTruckPerDayRange(t1, t2, truck):
         newData[x][1] = temp
 
     jsonMemes = json.dumps(newData)
-    #print(jsonMemes)
+    print(jsonMemes)
     return jsonMemes
 
 def timePerTruck():
@@ -82,7 +82,18 @@ def timePerTruck():
     )
 
     data = cursor.fetchall()
-    return json.dumps(data)
+    
+    newData = list(data)
+
+    for x in range(0,len(data)):
+        newData[x] = list(data[x])
+        newData[x][0] = list(data[x][0])
+        temp = str(data[x][0])[13:-2]
+        newData[x][0] = temp
+
+    jsonMemes = json.dumps(newData)
+    #print(jsonMemes)
+    return jsonMemes
 
 def timePerDay():
     cursor.execute(
@@ -95,7 +106,6 @@ def timePerDay():
     )
 
     data = cursor.fetchall()
-    #print(data[0])
     return json.dumps(data)
 
 #Returns nothing
@@ -118,12 +128,12 @@ def getRecentLocations():
 def main():
     #timePerTruckPerDay()
     #print("\n")
-    timePerTruckPerDayRange("02/01/2018","03/01/2018")
-    print("\n")
+    #timePerTruckPerDayRange("02/01/2018","03/01/2018")
+    #print("\n")
     #timePerDay()
     #print("\n")
-    #timePerTruck()
-    #print("\n")
+    print(timePerTruck())
+    print("\n")
     #getRecentLocations()
     #print("\n")
 
