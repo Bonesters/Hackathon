@@ -15,9 +15,12 @@ GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),
 ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
 
 /*---time per truck---*/
-SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTime))-MIN(CONVERT(float,VehicleEvent.StartTime))))),Vehicle.DisplayName 
-FROM VehicleEvent 
-INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
+SELECT CONVERT(varchar,CONVERT(datetime,AVG(subquery1.maxT-subquery1.minT))),Vehicle.DisplayName  FROM VehicleEvent,(
+    SELECT MAX(CONVERT(float,VehicleEvent.StartTime)) AS maxT,MIN(CONVERT(float,VehicleEvent.StartTime)) AS minT, VehicleEvent.VehicleID AS ID
+    FROM VehicleEvent
+    GROUP BY VehicleEvent.VehicleID,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
+)subquery1
+INNER JOIN Vehicle ON subquery1.ID=Vehicle.VehicleID
 GROUP BY Vehicle.DisplayName
 ORDER BY CONVERT(int,Vehicle.DisplayName);
 
