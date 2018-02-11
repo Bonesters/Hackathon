@@ -5,17 +5,17 @@ SELECT * FROM Vehicle;
 SELECT * FROM VehicleEvent;
 
 /*---time per truck, per day---*/
-SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))), VehicleID 
+SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))), VehicleID 
 FROM VehicleEvent 
 GROUP BY VehicleID,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
 
 /*---time per truck---*/
-SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))), VehicleID 
+SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))), VehicleID 
 FROM VehicleEvent 
 GROUP BY VehicleID;
 
 /*---time per day---*/
-SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))) 
+SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))))
 FROM VehicleEvent 
 GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
 
