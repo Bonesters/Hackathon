@@ -39,6 +39,37 @@ def timePerTruckPerDay():
     print(jsonMemes)
     return jsonMemes
 
+def timePerTruckPerDayRange(t1, t2):
+    cursor.execute(
+        """
+        SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTime))-MIN(CONVERT(float,VehicleEvent.StartTime))))),
+        CONVERT(varchar,MIN(VehicleEvent.StartTime)),Vehicle.DisplayName
+        FROM VehicleEvent 
+        INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
+        WHERE StartTime BETWEEN CONVERT(datetime,'""" + str(t1) + """',101) AND DATEADD(day,1,CONVERT(datetime,'""" + str(t2) + """',101))
+        GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
+        ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
+        """
+    )
+
+    data = cursor.fetchall()
+
+    newData = list(data)
+
+    for x in range(0,len(data)):
+        newData[x] = list(data[x])
+        newData[x][0] = list(data[x][0])
+        temp = str(data[x][0])[13:-2]
+        newData[x][0] = temp
+
+        newData[x][1] = list(data[x][1])
+        temp = str(data[x][1])[0:-8]
+        newData[x][1] = temp
+
+    jsonMemes = json.dumps(newData)
+    print(jsonMemes)
+    return jsonMemes
+
 def timePerTruck():
     cursor.execute(
         """
@@ -98,7 +129,9 @@ def getRecentLocations():
     return json.dumps(data)
 
 def main():
-    timePerTruckPerDay()
+    #timePerTruckPerDay()
+    #print("\n")
+    timePerTruckPerDayRange("02/01/2018","03/01/2018")
     print("\n")
     #timePerDay()
     #print("\n")
