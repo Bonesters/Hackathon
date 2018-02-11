@@ -39,14 +39,14 @@ def timePerTruckPerDay():
     print(jsonMemes)
     return jsonMemes
 
-def timePerTruckPerDayRange(t1, t2):
+def timePerTruckPerDayRange(t1, t2, truck):
     cursor.execute(
         """
         SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTime))-MIN(CONVERT(float,VehicleEvent.StartTime))))),
         CONVERT(varchar,MIN(VehicleEvent.StartTime)),Vehicle.DisplayName
         FROM VehicleEvent 
         INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
-        WHERE StartTime BETWEEN CONVERT(datetime,'""" + str(t1) + """',101) AND DATEADD(day,1,CONVERT(datetime,'""" + str(t2) + """',101))
+        WHERE (StartTime BETWEEN CONVERT(datetime,'""" + t1 + """',101) AND DATEADD(day,1,CONVERT(datetime,'""" + t2 + """',101))) AND (DisplayName='""" + truck + """')
         GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
         ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
         """
