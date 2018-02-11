@@ -12,13 +12,14 @@ CONVERT(varchar,MIN(VehicleEvent.StartTime)),Vehicle.DisplayName
 FROM VehicleEvent 
 INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
 GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
-ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),Vehicle.DisplayName;
+ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
 
 /*---time per truck---*/
 SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTime))-MIN(CONVERT(float,VehicleEvent.StartTime))))),Vehicle.DisplayName 
 FROM VehicleEvent 
 INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
-GROUP BY Vehicle.DisplayName;
+GROUP BY Vehicle.DisplayName
+ORDER BY CONVERT(int,Vehicle.DisplayName);
 
 /*---time per day---*/
 SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))),CONVERT(varchar,MIN(StartTime))
