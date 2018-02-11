@@ -42,14 +42,14 @@ SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,VehicleEvent.StartTim
 CONVERT(varchar,MIN(VehicleEvent.StartTime)),Vehicle.DisplayName
 FROM VehicleEvent 
 INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
-WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',1))
+WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',101) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',101))
 GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
 ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
 
 /*---time per day in range---*/
 SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))),CONVERT(varchar,MIN(StartTime))
 FROM VehicleEvent 
-WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',1))
+WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',101) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',101))
 GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
 ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
 
@@ -57,7 +57,7 @@ ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTi
 SELECT Vehicle.DisplayName,Latitude,Longitude,CONVERT(varchar,VehicleEvent.StartTime),Heading,EventTypeID,Location 
 FROM VehicleEvent 
 INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
-WHERE VehicleEvent.StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',1))
+WHERE VehicleEvent.StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',101) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',101))
 ORDER BY VehicleEvent.StartTime;
 
 /*---get display names for all trucks---*/
