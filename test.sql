@@ -59,3 +59,7 @@ FROM VehicleEvent
 INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
 WHERE VehicleEvent.StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND DATEADD(day,1,CONVERT(datetime,'mm/dd/yyyy',1))
 ORDER BY VehicleEvent.StartTime;
+
+/*---get display names for all trucks---*/
+SELECT DisplayName FROM Vehicle
+ORDER BY CONVERT(int,DisplayName) ASC;
