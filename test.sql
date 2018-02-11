@@ -45,3 +45,10 @@ INNER JOIN Vehicle ON VehicleEvent.VehicleID=Vehicle.VehicleID
 WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND CONVERT(datetime,'mm/dd/yyyy',1)
 GROUP BY Vehicle.DisplayName,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
 ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime),CONVERT(int,Vehicle.DisplayName);
+
+/*---time per day in range---*/
+SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))),CONVERT(varchar,MIN(StartTime))
+FROM VehicleEvent 
+WHERE StartTime BETWEEN CONVERT(datetime,'mm/dd/yyyy',1) AND CONVERT(datetime,'mm/dd/yyyy',1)
+GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime)
+ORDER BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
