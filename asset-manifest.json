@@ -1,10 +1,23 @@
 {
-  "main.css": "static/css/main.d9b80803.css",
-  "main.css.map": "static/css/main.d9b80803.css.map",
-  "main.js": "static/js/main.90d9be52.js",
-  "main.js.map": "static/js/main.90d9be52.js.map",
+  "main.css": "static/css/main.a5f3272f.css",
+  "main.css.map": "static/css/main.a5f3272f.css.map",
+  "main.js": "static/js/main.0f302829.js",
+  "main.js.map": "static/js/main.0f302829.js.map",
   "static/media/credits.png": "static/media/credits.bfa45392.png",
   "static/media/instruct.png": "static/media/instruct.5bd68e2d.png",
   "static/media/maps.png": "static/media/maps.35d21837.png",
-  "static/media/truck.png": "static/media/truck.49bbc8ef.png"
+  "static/media/truck.png": "static/media/truck.49bbc8ef.png",
+  "static/media/truck1.png": "static/media/truck1.33c2e684.png",
+  "static/media/truck10.png": "static/media/truck10.f15470f9.png",
+  "static/media/truck11.png": "static/media/truck11.6c94c82b.png",
+  "static/media/truck12.png": "static/media/truck12.f5d5e838.png",
+  "static/media/truck13.png": "static/media/truck13.a8474282.png",
+  "static/media/truck15.png": "static/media/truck15.ea17e93d.png",
+  "static/media/truck16.png": "static/media/truck16.c848a847.png",
+  "static/media/truck2.png": "static/media/truck2.08927348.png",
+  "static/media/truck4.png": "static/media/truck4.88a0697b.png",
+  "static/media/truck6.png": "static/media/truck6.280e7abd.png",
+  "static/media/truck7.png": "static/media/truck7.62b24953.png",
+  "static/media/truck8.png": "static/media/truck8.f13b7d4b.png",
+  "static/media/truck9.png": "static/media/truck9.f5e6ad86.png"
 }
