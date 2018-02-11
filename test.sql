@@ -20,7 +20,7 @@ FROM VehicleEvent
 GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
 
 /*---all events from today---*/
-SELECT VehicleID,Latitude,Longitude,StartTime,Heading,EventTypeID,Location 
+SELECT VehicleID,Latitude,Longitude,CONVERT(varchar,StartTime),Heading,EventTypeID,Location 
 FROM VehicleEvent 
 WHERE DAY(StartTime)=DAY(CURRENT_TIMESTAMP) AND MONTH(StartTime)=MONTH(CURRENT_TIMESTAMP) AND YEAR(StartTime)=YEAR(CURRENT_TIMESTAMP)
 ORDER BY StartTime;
