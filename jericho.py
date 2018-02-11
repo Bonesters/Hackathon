@@ -9,62 +9,62 @@ database = "GPSDATA"
 connection = pymssql.connect(server, username, password, database)
 cursor = connection.cursor()
 
-def getAllVehicles():
-    cursor.execute(
-        """
-        SELECT * FROM Vehicle;
-        """
-    )
-    
-    data = cursor.fetchall()
-    print(data)
-    print()
-    return json.dumps(data)
+#def getAllVehicles():
+#    cursor.execute(
+#        """
+#        SELECT * FROM Vehicle;
+#        """
+#    )    
+#    data = cursor.fetchall()
+#    print(data)
+#    print()
+#    return json.dumps(data)
 
 def timePerTruckPerDay():
-    cursor.execute("""
-        SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))), VehicleID 
+    cursor.execute(
+        """
+        SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime))))), VehicleID 
         FROM VehicleEvent 
-        GROUP BY VehicleID,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);        
-        """)
+        GROUP BY VehicleID,DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
+        """
+    )
 
     data = cursor.fetchall()
-    print(data)
-    print()
     return json.dumps(data)
 
 def timePerDay():
-    cursor.execute("""
-        SELECT CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))) 
+    cursor.execute(
+        """
+        SELECT CONVERT(varchar,CONVERT(datetime,(MAX(CONVERT(float,StartTime))-MIN(CONVERT(float,StartTime)))))
         FROM VehicleEvent 
         GROUP BY DATEPART(year,StartTime),DATEPART(month,StartTime),DATEPART(day,StartTime);
-        """)
+        """
+    )
 
     data = cursor.fetchall()
-    print(data)
-    print()
     return json.dumps(data)
 
 def getRecentLocations():
     cursor.execute(
         """
-        SELECT VehicleID,Latitude,Longitude,StartTime,Heading,EventTypeID,Location FROM VehicleEvent ORDER BY VehicleID, StartTime DESC;
+        SELECT VehicleID,Latitude,Longitude,StartTime,Heading,EventTypeID,Location 
+        FROM VehicleEvent 
+        WHERE DAY(StartTime)=DAY(CURRENT_TIMESTAMP) AND MONTH(StartTime)=MONTH(CURRENT_TIMESTAMP) AND YEAR(StartTime)=YEAR(CURRENT_TIMESTAMP)
+        ORDER BY StartTime;
         """
     )
 
     data = cursor.fetchall()
-    print(data)
-    print()
     return json.dumps(data)
 
 def main():
-    getAllVehicles()
+    print(getAllVehicles())
     print("\n")
-    timePerTruckPerDay()
+    print(timePerTruckPerDay())
     print("\n")
-    timePerDay()
+    print(timePerDay())
     print("\n")
-    getRecentLocations()
+    print(getRecentLocations())
 
 if (__name__ == "__main__"):
     main()
